@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06080d">
+<meta name="mobile-web-app-capable" content="yes">
+<title>F1 Journal Studio</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+  <main id="paginas">
+    <!-- Templates -->
+    <section class="pagina" id="p-templates">
+      <header class="topo">
+        <h1>Templates</h1>
+        <button class="icone" id="btSync" aria-label="Sincronizar com o servidor"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button>
+      </header>
+      <div class="busca"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="busca" type="search" placeholder="Buscar template" autocomplete="off"><button class="so-fav" id="btFav" aria-pressed="false" aria-label="Só favoritos"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9L6.7 20l1.1-6L3.4 9.8l6-.8z"/></svg></button></div>
+      <div id="grade" class="grade"></div>
+      <p id="notaVideo" class="nota" hidden></p>
+    </section>
+
+    <!-- Imagens geradas -->
+    <section class="pagina" id="p-imagens" hidden>
+      <header class="topo"><h1>Minhas imagens</h1></header>
+      <div id="gradeImg" class="grade"></div>
+    </section>
+
+    <!-- Postagem Global -->
+    <section class="pagina" id="p-global" hidden>
+      <header class="topo"><h1>Postagem Global</h1><button class="icone" id="btGlobalCfg" aria-label="Endereço do webhook"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></header>
+      <div id="gSolta" class="solta"></div>
+      <label class="rotulo" for="gLeg">Legenda</label>
+      <textarea id="gLeg" rows="5" placeholder="Escreva a legenda do post"></textarea>
+      <div class="linha-contador"><span id="gCont">0 / 2200</span></div>
+      <button class="botao ouro grande" id="gEnviar" disabled>Enviar o conteúdo</button>
+      <p id="gStatus" class="status" role="status"></p>
+      <div id="gUltimos"></div>
+    </section>
+
+    <!-- Config -->
+    <section class="pagina" id="p-config" hidden>
+      <header class="topo"><h1>Config</h1></header>
+      <div id="cfgConteudo"></div>
+    </section>
+  </main>
+
+  <nav id="abas" aria-label="Menu principal">
+    <button data-p="templates" class="on"><svg viewBox="0 0 24 24"><rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="M4 14.5l4.2-3.7 3.6 3 3-2.2L20 15M9 8.2h.01"/></svg><span>Templates</span></button>
+    <button data-p="imagens"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="14" rx="2.5"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/></svg><span>Imagens</span></button>
+    <button data-p="global"><svg viewBox="0 0 24 24"><path d="M21 3L10.5 13.5M21 3l-6.5 18-4-7.5L3 9.5z"/></svg><span>Postagem</span></button>
+    <button data-p="config"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><span>Config</span></button>
+  </nav>
+
+  <!-- Criar post (tela cheia por cima) -->
+  <section id="t-criar" class="tela-cheia" hidden>
+    <header class="topo topo-criar">
+      <button class="icone" id="btVoltar" aria-label="Voltar"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <h2 id="criarTitulo"></h2>
+    </header>
+    <div id="criarRolagem">
+      <div id="prevBox"><div id="prev"><iframe id="quadro" title="Prévia do post" sandbox="allow-same-origin allow-scripts" tabindex="-1"></iframe></div></div>
+      <div id="avisosTpl"></div>
+      <div id="campos"></div>
+      <div class="espaco-acao"></div>
+    </div>
+    <div id="barraFmt" hidden></div>
+    <footer class="acao"><button class="botao ouro grande" id="btGerar">Gerar imagem</button></footer>
+  </section>
+
+  <!-- Resultado (folha de baixo) -->
+  <div id="folha" class="folha" hidden>
+    <div class="folha-fundo" data-fechar></div>
+    <div class="folha-corpo" role="dialog" aria-modal="true" aria-label="Imagem pronta">
+      <div class="folha-alca"></div>
+      <img id="resImg" alt="Imagem gerada">
+      <p id="resInfo" class="nota"></p>
+      <div class="folha-botoes">
+        <button class="botao ouro" id="resShare">Compartilhar</button>
+        <button class="botao azul" id="resN8n">Enviar pro n8n</button>
+        <button class="botao vidro" id="resSalvar">Baixar arquivo</button>
+        <button class="botao vidro" data-fechar>Fechar</button>
+      </div>
+      <p id="resStatus" class="status" role="status"></p>
+    </div>
+  </div>
+
+  <!-- Pergunta simples (nome, confirmação) -->
+  <dialog id="dlg"><form method="dialog"><h3 id="dlgTit"></h3><p id="dlgTxt"></p><input id="dlgInp" hidden><menu><button value="nao" class="botao vidro" id="dlgNao">Cancelar</button><button value="sim" class="botao ouro" id="dlgSim">OK</button></menu></form></dialog>
+
+  <div id="toast" role="status" aria-live="polite" hidden></div>
+  <input type="file" id="arqFoto" accept="image/*" hidden>
+  <input type="file" id="arqGlobal" accept="image/*,video/*" hidden>
+</div>
+
+<script src="js/db.js"></script>
+<script src="js/net.js"></script>
+<script src="js/montar.js"></script>
+<script src="js/recursos.js"></script>
+<script src="js/render.js"></script>
+<script src="js/sync.js"></script>
+<script src="js/envio.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/texto-rico.js"></script>
+<script src="js/tela-templates.js"></script>
+<script src="js/tela-criar.js"></script>
+<script src="js/tela-imagens.js"></script>
+<script src="js/tela-global.js"></script>
+<script src="js/tela-config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

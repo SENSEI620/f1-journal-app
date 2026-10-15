@@ -1,0 +1,7 @@
+{
+  "appId": "br.sense1.f1journalstudio.mobile",
+  "appName": "F1 Journal Studio",
+  "webDir": "www",
+  "server": { "androidScheme": "https" },
+  "plugins": { "CapacitorHttp": { "enabled": true } }
+}
